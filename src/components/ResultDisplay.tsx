@@ -40,18 +40,18 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
   };
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">Your Painted Room</h2>
+        <h2 className="text-3xl font-semibold text-gray-900 tracking-tight">Result</h2>
         
         {/* Mode Toggle */}
-        <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
+        <div className="flex gap-1 bg-gray-200 p-1 rounded-xl">
           <button
             onClick={() => setComparisonMode('side-by-side')}
             className={`
-              px-3 py-1 rounded text-sm font-medium transition-colors
+              px-4 py-2 rounded-lg text-sm font-semibold transition-all
               ${comparisonMode === 'side-by-side' 
-                ? 'bg-white text-gray-900 shadow' 
+                ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'}
             `}
           >
@@ -60,9 +60,9 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
           <button
             onClick={() => setComparisonMode('slider')}
             className={`
-              px-3 py-1 rounded text-sm font-medium transition-colors
+              px-4 py-2 rounded-lg text-sm font-semibold transition-all
               ${comparisonMode === 'slider' 
-                ? 'bg-white text-gray-900 shadow' 
+                ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'}
             `}
           >
@@ -73,13 +73,13 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
 
       {/* Comparison Display */}
       {comparisonMode === 'side-by-side' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Original */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-gray-700 text-center">
-              Original
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-gray-500 text-center tracking-tight">
+              ORIGINAL
             </h3>
-            <div className="relative rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg">
+            <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
               <img
                 src={originalImageUrl}
                 alt="Original room"
@@ -89,17 +89,17 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
           </div>
 
           {/* Generated */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-gray-700 text-center">
-              With New Paint
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-gray-500 text-center tracking-tight">
+              NEW PAINT
             </h3>
-            <div className="relative rounded-lg overflow-hidden border-2 border-blue-500 shadow-lg">
+            <div className="relative rounded-2xl overflow-hidden border-2 border-gray-900 shadow-md">
               <img
                 src={generatedImageUrl}
                 alt="Painted room"
                 className="w-full h-auto"
               />
-              <div className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold">
+              <div className="absolute top-3 right-3 bg-gray-900 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">
                 NEW
               </div>
             </div>
@@ -107,7 +107,7 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
         </div>
       ) : (
         <div
-          className="relative w-full rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg cursor-col-resize select-none"
+          className="relative w-full rounded-2xl overflow-hidden border border-gray-200 shadow-md cursor-col-resize select-none"
           onMouseDown={handleSliderMouseDown}
           onMouseUp={handleSliderMouseUp}
           onMouseMove={handleSliderMove}
@@ -137,45 +137,45 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
 
           {/* Slider Line */}
           <div
-            className="absolute top-0 bottom-0 w-1 bg-white shadow-lg pointer-events-none"
+            className="absolute top-0 bottom-0 w-0.5 bg-white/80 shadow-xl pointer-events-none"
             style={{ left: `${sliderPosition}%` }}
           >
             {/* Slider Handle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg border-2 border-blue-500 flex items-center justify-center pointer-events-auto cursor-col-resize">
-              <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-xl border border-gray-200 flex items-center justify-center pointer-events-auto cursor-col-resize">
+              <svg className="w-5 h-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
               </svg>
             </div>
           </div>
 
           {/* Labels */}
-          <div className="absolute top-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-semibold pointer-events-none">
+          <div className="absolute top-3 left-3 bg-gray-900/90 backdrop-blur-xl text-white px-3 py-1.5 rounded-lg text-xs font-semibold pointer-events-none">
             Original
           </div>
-          <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-semibold pointer-events-none">
+          <div className="absolute top-3 right-3 bg-gray-900/90 backdrop-blur-xl text-white px-3 py-1.5 rounded-lg text-xs font-semibold pointer-events-none">
             New Paint
           </div>
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
         <button
           onClick={handleDownload}
-          className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md flex items-center justify-center gap-2"
+          className="flex-1 px-6 py-4 bg-black text-white font-semibold rounded-2xl hover:bg-gray-800 transition-all shadow-sm flex items-center justify-center gap-2 active:scale-[0.98]"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
           Download Image
         </button>
         
         <button
           onClick={onTryAgain}
-          className="flex-1 px-6 py-3 bg-gray-100 text-gray-900 font-semibold rounded-lg hover:bg-gray-200 transition-colors border-2 border-gray-300 flex items-center justify-center gap-2"
+          className="flex-1 px-6 py-4 bg-gray-100 text-gray-900 font-semibold rounded-2xl hover:bg-gray-200 transition-all border border-gray-200 flex items-center justify-center gap-2 active:scale-[0.98]"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           Try Another Color
         </button>

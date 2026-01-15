@@ -60,10 +60,10 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
   };
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-5">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Select Paint Color
+        <label className="block text-sm font-semibold text-gray-900 mb-3 tracking-tight">
+          Paint Color
         </label>
         
         {/* Color Picker and HEX Input Row */}
@@ -75,7 +75,7 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
               value={selectedColor}
               onChange={handleColorPickerChange}
               disabled={disabled}
-              className="h-12 w-12 rounded border-2 border-gray-300 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-14 w-14 rounded-xl border border-gray-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 shadow-sm"
               title="Pick a color"
             />
           </div>
@@ -89,25 +89,25 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
               placeholder="#FFFFFF"
               disabled={disabled}
               className={`
-                w-full px-3 py-2 border rounded-md font-mono text-sm
-                focus:outline-none focus:ring-2 focus:ring-blue-500
-                disabled:bg-gray-100 disabled:cursor-not-allowed
-                ${hexError ? 'border-red-500' : 'border-gray-300'}
+                w-full px-4 py-3 border rounded-xl font-mono text-sm
+                focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent
+                disabled:bg-gray-100 disabled:cursor-not-allowed transition-all
+                ${hexError ? 'border-red-300' : 'border-gray-200'}
               `}
               maxLength={7}
             />
             {hexError && (
-              <p className="mt-1 text-xs text-red-600">{hexError}</p>
+              <p className="mt-2 text-xs text-red-600">{hexError}</p>
             )}
-            <p className="mt-1 text-xs text-gray-500">
-              Selected: {getColorName()}
+            <p className="mt-2 text-xs text-gray-500 font-medium">
+              {getColorName()}
             </p>
           </div>
 
           {/* Current Color Display */}
           <div className="flex-shrink-0">
             <div
-              className="h-12 w-12 rounded border-2 border-gray-300 shadow-inner"
+              className="h-14 w-14 rounded-xl border border-gray-200 shadow-sm"
               style={{ backgroundColor: selectedColor }}
               title={selectedColor}
             />
@@ -117,22 +117,22 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
 
       {/* Preset Colors */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Popular Paint Colors
+        <label className="block text-sm font-semibold text-gray-900 mb-3 tracking-tight">
+          Presets
         </label>
-        <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+        <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
           {PRESET_COLORS.map((color) => (
             <button
               key={color.hex}
               onClick={() => handlePresetClick(color.hex)}
               disabled={disabled}
               className={`
-                group relative h-12 rounded-md border-2 transition-all
-                hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50
+                group relative h-14 rounded-xl border transition-all
+                hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 active:scale-95
                 ${
                   selectedColor.toUpperCase() === color.hex.toUpperCase()
-                    ? 'border-blue-500 ring-2 ring-blue-200'
-                    : 'border-gray-300 hover:border-gray-400'
+                    ? 'border-gray-900 ring-2 ring-gray-300 shadow-md'
+                    : 'border-gray-200 hover:border-gray-300 shadow-sm'
                 }
               `}
               style={{ backgroundColor: color.hex }}
@@ -141,7 +141,7 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
             >
               {selectedColor.toUpperCase() === color.hex.toUpperCase() && (
                 <svg
-                  className="absolute inset-0 m-auto h-6 w-6 text-gray-800 drop-shadow-lg"
+                  className="absolute inset-0 m-auto h-6 w-6 text-gray-900 drop-shadow-md"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -154,9 +154,9 @@ export const ColorSelector: React.FC<ColorSelectorProps> = ({
               )}
               
               {/* Tooltip */}
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-gray-900/95 backdrop-blur-xl text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
                 {color.name}
-                <span className="block text-gray-400">{color.hex}</span>
+                <span className="block text-gray-300 mt-0.5">{color.hex}</span>
               </span>
             </button>
           ))}

@@ -95,10 +95,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     <div className="w-full">
       <div
         className={`
-          relative border-2 border-dashed rounded-lg transition-all duration-200
-          ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}
-          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-gray-400'}
-          ${error ? 'border-red-500' : ''}
+          relative border-2 border-dashed rounded-2xl transition-all duration-300
+          ${isDragging ? 'border-gray-400 bg-gray-100' : 'border-gray-200'}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-gray-300'}
+          ${error ? 'border-red-300' : ''}
         `}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -120,49 +120,49 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             <img
               src={previewUrl}
               alt="Room preview"
-              className="w-full h-auto max-h-96 object-contain rounded-lg"
+              className="w-full h-auto max-h-96 object-contain rounded-2xl"
             />
-            <div className="absolute top-2 right-2 bg-white rounded-lg shadow-lg p-2">
+            <div className="absolute top-3 right-3">
               <button
                 onClick={handleClear}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm font-medium"
+                className="px-4 py-2 bg-white/90 backdrop-blur-xl text-gray-900 rounded-xl hover:bg-white transition-all text-sm font-medium shadow-sm border border-gray-200"
                 disabled={disabled}
               >
-                Clear
+                Remove
               </button>
             </div>
             {currentImage && (
-              <div className="mt-2 text-sm text-gray-600">
-                <p className="font-medium">{currentImage.name}</p>
-                <p className="text-xs text-gray-500">{formatFileSize(currentImage.size)}</p>
+              <div className="mt-3 text-sm text-gray-500">
+                <p className="font-medium text-gray-900">{currentImage.name}</p>
+                <p className="text-xs mt-1">{formatFileSize(currentImage.size)}</p>
               </div>
             )}
           </div>
         ) : (
-          <div className="p-12 text-center">
+          <div className="p-16 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-14 w-14 text-gray-300"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
+              strokeWidth={1.5}
               aria-hidden="true"
             >
               <path
                 d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="mt-4">
-              <p className="text-lg font-medium text-gray-900">
-                Upload a room image
+            <div className="mt-5">
+              <p className="text-lg font-semibold text-gray-900 tracking-tight">
+                Upload an image
               </p>
-              <p className="mt-1 text-sm text-gray-500">
-                Drag and drop or click to select
+              <p className="mt-2 text-sm text-gray-500">
+                Drag and drop or click to browse
               </p>
               <p className="mt-1 text-xs text-gray-400">
-                JPG, PNG, or WebP (max 5MB)
+                JPG, PNG, or WebP • Max 5MB
               </p>
             </div>
           </div>
@@ -170,7 +170,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       </div>
 
       {error && (
-        <div className="mt-2 text-sm text-red-600 bg-red-50 p-3 rounded-md">
+        <div className="mt-3 text-sm text-red-600 bg-red-50 p-4 rounded-xl border border-red-100">
           {error}
         </div>
       )}
