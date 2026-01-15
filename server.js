@@ -16,6 +16,19 @@ const REPLICATE_API_URL = 'https://api.replicate.com/v1/predictions';
 // Support both naming conventions
 const API_TOKEN = process.env.REPLICATE_API_TOKEN || process.env.VITE_REPLICATE_API_TOKEN;
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'Paint Visualizer API is running',
+    hasToken: !!API_TOKEN 
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 // Create prediction endpoint
 app.post('/api/predictions', async (req, res) => {
   console.log('[SERVER] Received prediction request');
@@ -75,7 +88,8 @@ app.get('/api/predictions/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`[SERVER] Running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[SERVER] Running on port ${PORT}`);
   console.log(`[SERVER] API token configured: ${!!API_TOKEN}`);
+  console.log(`[SERVER] Environment: ${process.env.NODE_ENV || 'development'}`);
 });
