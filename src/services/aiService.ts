@@ -4,8 +4,8 @@ import { resizeImage } from '../utils/imageProcessing';
 const BACKEND_API_URL = 'http://localhost:3001/api/predictions';
 const API_TOKEN = import.meta.env.VITE_REPLICATE_API_TOKEN;
 
-// Using instruct-pix2pix model for image editing
-// Model version for timothybrooks/instruct-pix2pix
+// Back to InstructPix2Pix - proven working model (quality varies)
+// Model: timothybrooks/instruct-pix2pix
 const MODEL_VERSION = '30c1d0b916a6f8efce20493f5d61ee27491ab2a60437c13c588468b9810ec23f';
 
 interface ReplicateResponse {
@@ -35,12 +35,16 @@ export const generatePaintedRoom = async (
     // Resize and convert image to base64 (max 1024px to prevent GPU memory issues)
     const imageBase64 = await resizeImage(image, 1024);
 
-    // Create prompt for the AI
-    const prompt = `Change all the wall colors in this room to ${hexColor}. Keep the furniture, decorations, lighting, and room layout exactly the same. Only repaint the walls.`;
+    // Create prompt optimized for better results
+    const prompt = `Repaint only the walls to ${hexColor} color. Keep all furniture, objects, floor, ceiling, and lighting exactly the same. High quality interior photography.`;
 
     onProgress?.('Sending to AI...');
 
-    // Start the prediction via backend proxy
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c1d04ec1-d55c-4c73-bb7b-66159d307229',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'aiService.ts:38',message:'Using InstructPix2Pix',data:{modelVersion:MODEL_VERSION},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix-v2',hypothesisId:'FALLBACK'})}).catch(()=>{});
+    // #endregion
+
+    // Start the prediction via backend proxy with optimized parameters
     const response = await fetch(BACKEND_API_URL, {
       method: 'POST',
       headers: {
@@ -51,12 +55,16 @@ export const generatePaintedRoom = async (
         input: {
           image: imageBase64,
           prompt: prompt,
-          num_inference_steps: 20,
-          image_guidance_scale: 1.5,
-          guidance_scale: 7.5,
+          num_inference_steps: 30,
+          image_guidance_scale: 1.8, // Higher = more faithful to original
+          guidance_scale: 9, // Higher = follows prompt better
         },
       }),
     });
+
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c1d04ec1-d55c-4c73-bb7b-66159d307229',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'aiService.ts:52',message:'Response received',data:{ok:response.ok,status:response.status},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix-v2',hypothesisId:'FALLBACK'})}).catch(()=>{});
+    // #endregion
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
