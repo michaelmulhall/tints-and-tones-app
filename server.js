@@ -2,16 +2,19 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+// Load environment variables
 dotenv.config({ path: '.env.local' });
+dotenv.config(); // Also load from .env if exists
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
 const REPLICATE_API_URL = 'https://api.replicate.com/v1/predictions';
-const API_TOKEN = process.env.VITE_REPLICATE_API_TOKEN;
+// Support both naming conventions
+const API_TOKEN = process.env.REPLICATE_API_TOKEN || process.env.VITE_REPLICATE_API_TOKEN;
 
 // Create prediction endpoint
 app.post('/api/predictions', async (req, res) => {

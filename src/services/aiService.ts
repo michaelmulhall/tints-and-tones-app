@@ -1,8 +1,8 @@
 import { resizeImage } from '../utils/imageProcessing';
 
-// Use local backend proxy instead of direct Replicate API
-const BACKEND_API_URL = 'http://localhost:3001/api/predictions';
-const API_TOKEN = import.meta.env.VITE_REPLICATE_API_TOKEN;
+// Use backend proxy instead of direct Replicate API
+// In production, use the deployed backend URL
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001/api/predictions';
 
 // Back to InstructPix2Pix - proven working model (quality varies)
 // Model: timothybrooks/instruct-pix2pix
@@ -23,11 +23,7 @@ export const generatePaintedRoom = async (
   hexColor: string,
   onProgress?: (status: string) => void
 ): Promise<string> => {
-  if (!API_TOKEN || API_TOKEN === 'your_api_key_here') {
-    throw new Error(
-      'Replicate API token is not configured. Please set VITE_REPLICATE_API_TOKEN in your .env.local file.'
-    );
-  }
+  // No token check needed - backend handles authentication
 
   try {
     onProgress?.('Resizing and converting image...');
