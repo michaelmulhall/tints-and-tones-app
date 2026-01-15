@@ -249,3 +249,4 @@ For issues, questions, or contributions, please open an issue in the repository.
 ---
 
 **Note**: This is a demo application. For production use, implement proper backend API key management and consider rate limiting to prevent abuse.
+# tints-and-tones-app
