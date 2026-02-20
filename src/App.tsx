@@ -1,7 +1,7 @@
-import { RoomPaintVisualizer } from './components/RoomPaintVisualizer'
+import { Calculator } from './components/Calculator'
 
 function App() {
-  return <RoomPaintVisualizer />
+  return <Calculator />
 }
 
 export default App
